@@ -1,0 +1,17 @@
+[
+{
+  "modid": "Plethora",
+  "name": "Plethora",
+  "description": "A plethora of things!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "logoFile": "",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["zachy"],
+  "credits": "",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
