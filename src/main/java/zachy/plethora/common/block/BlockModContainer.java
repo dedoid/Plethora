@@ -16,4 +16,9 @@ public abstract class BlockModContainer<T extends TileEntity> extends BlockConta
 
     @Override
     public abstract T createNewTileEntity(World world, int meta);
+
+    @Override
+    public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float chance, int fortune) {
+        // noop
+    }
 }
