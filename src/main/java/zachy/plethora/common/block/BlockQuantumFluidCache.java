@@ -10,18 +10,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidHandler;
 import zachy.plethora.client.core.handler.GuiHandler;
+import zachy.plethora.client.lib.LibResources;
 import zachy.plethora.common.Plethora;
 import zachy.plethora.common.block.tile.TileQuantumFluidCache;
+import zachy.plethora.common.core.util.FluidUtils;
 import zachy.plethora.common.lib.LibBlockNames;
 
 public class BlockQuantumFluidCache extends BlockModContainer {
 
     IIcon iconFront;
-    IIcon iconSide;
-    IIcon iconTop;
-    IIcon iconBottom;
 
     public BlockQuantumFluidCache() {
         super(Material.iron);
@@ -39,23 +40,22 @@ public class BlockQuantumFluidCache extends BlockModContainer {
 
     @Override
     public void registerBlockIcons(IIconRegister register) {
-        //iconFront = register.registerIcon();
-        //iconSide = register.registerIcon();
-        //iconTop = register.registerIcon();
-        //iconBottom = register.registerIcon();
+        iconFront = register.registerIcon(LibResources.PREFIX_MOD + "quantumFluidCache_front");
+        blockIcon = register.registerIcon(LibResources.PREFIX_MOD + "quantumFluidCache_icon");
     }
 
     @Override
     public IIcon getIcon(int side, int meta) {
-        switch(side) {
-            case 0:
-                return iconBottom;
-            case 1:
-                return iconTop;
-            case 2:
-                return iconFront;
-            default:
-                return iconSide;
+        if (side == 2 && meta == 2) {
+            return iconFront;
+        } else if (side == 5 && meta == 3) {
+            return iconFront;
+        } else if (side == 3 && meta == 0) {
+            return iconFront;
+        } else if (side == 4 && meta == 1) {
+            return iconFront;
+        } else {
+            return blockIcon;
         }
     }
 
@@ -81,6 +81,7 @@ public class BlockQuantumFluidCache extends BlockModContainer {
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
         TileEntity tileEntity;
+        int facing;
 
         tileEntity = world.getTileEntity(x, y, z);
 
@@ -90,6 +91,9 @@ public class BlockQuantumFluidCache extends BlockModContainer {
                 ((TileQuantumFluidCache) tileEntity).readFromNBTWithoutCoords(stack.getTagCompound().getCompoundTag("tileEntity"));
             }
         }
+
+        facing = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
+        world.setBlockMetadataWithNotify(x, y, z, facing, 2);
     }
 
     @Override
@@ -127,6 +131,21 @@ public class BlockQuantumFluidCache extends BlockModContainer {
     }
 
     public boolean fillBlockWithFluid(World world, int x, int y, int z, EntityPlayer player, ItemStack heldItem) {
+        TileEntity tileEntity;
+        boolean inserted;
+
+        tileEntity = world.getTileEntity(x, y, z);
+
+        if (tileEntity instanceof TileQuantumFluidCache) {
+
+            //inserted = FluidUtils.
+
+            if (!world.isRemote) {
+                ((TileQuantumFluidCache) tileEntity).syncWithAll();
+            }
+
+            //return inserted;
+        }
 
         return false;
     }

@@ -44,6 +44,8 @@ public class GuiQuantumFluidCache extends GuiContainer {
         if (tileQuantumFluidCache.tank.getFluid() != null) {
             this.fontRendererObj.drawString(tileQuantumFluidCache.tank.getFluid().getLocalizedName(), 10, 20, 16448255);
             this.fontRendererObj.drawString(tileQuantumFluidCache.tank.getFluidAmount() + "mb", 10, 30, 16448255);
+        } else {
+            this.fontRendererObj.drawString("No Fluid Stored", 10, 20, 16448255);
         }
     }
 }
