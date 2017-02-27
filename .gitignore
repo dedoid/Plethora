@@ -4,6 +4,7 @@ Thumbs.db
 ## gradle
 /.gradle
 /build
+/conf
 
 ## ForgeGradle
 /run
