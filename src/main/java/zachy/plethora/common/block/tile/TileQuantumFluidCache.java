@@ -18,6 +18,8 @@ import zachy.plethora.common.core.util.Inventory;
 import zachy.plethora.common.core.util.Tank;
 import zachy.plethora.common.network.PacketHandler;
 
+import java.util.List;
+
 public class TileQuantumFluidCache extends TileMod implements IInventory, IFluidHandler {
 
     public int storage;
@@ -26,7 +28,7 @@ public class TileQuantumFluidCache extends TileMod implements IInventory, IFluid
     public Tank tank;
 
     public  TileQuantumFluidCache() {
-        storage = 53670911; // add config option
+        storage = Integer.MAX_VALUE;
 
         inventory = new Inventory(3, "tileQuantumFluidCache", 64, this);
 
@@ -220,5 +222,15 @@ public class TileQuantumFluidCache extends TileMod implements IInventory, IFluid
         dropStack.getTagCompound().setTag("tileEntity", tileEntity);
 
         return dropStack;
+    }
+
+    @Override
+    public void addWailaInfo(List<String> info) {
+        if (tank.getFluid() != null) {
+            info.add(tank.getFluid().getLocalizedName());
+            info.add(tank.getFluidAmount() + "mb");
+        } else {
+            info.add("No Fluid Stored");
+        }
     }
 }

@@ -12,12 +12,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.IFluidHandler;
 import zachy.plethora.client.core.handler.GuiHandler;
 import zachy.plethora.client.lib.LibResources;
 import zachy.plethora.common.Plethora;
 import zachy.plethora.common.block.tile.TileQuantumFluidCache;
-import zachy.plethora.common.core.util.FluidUtils;
 import zachy.plethora.common.lib.LibBlockNames;
 
 public class BlockQuantumFluidCache extends BlockModContainer {
