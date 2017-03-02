@@ -1,12 +1,15 @@
 package zachy.plethora.common.core.util;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemUtils {
+public class ItemUtil {
 
     public static boolean isItemEqual(final ItemStack stackA, final ItemStack stackB, final boolean matchDamage, final boolean matchNBT) {
         if (stackA == null || stackB == null) {
@@ -118,5 +121,38 @@ public class ItemUtils {
 
     public static ItemStack readItemFromNBT(NBTTagCompound data) {
         return ItemStack.loadItemStackFromNBT(data);
+    }
+
+    public static ItemStack consumeItem(ItemStack stack) {
+        if (stack.stackSize == 1) {
+            if (stack.getItem().hasContainerItem(stack)) {
+                return stack.getItem().getContainerItem(stack);
+            } else {
+                return null;
+            }
+        } else {
+            stack.splitStack(1);
+            return stack;
+        }
+    }
+
+    public static void dropItems(World world, ItemStack stack, double x, double y, double z) {
+        float f1;
+        double xOffset, yOffset, zOffset;
+        EntityItem entityItem;
+
+        f1 = 0.7F;
+
+        if (stack.stackSize <= 0) {
+            return;
+        }
+
+        xOffset = (world.rand.nextFloat() * f1) + (1.0F - f1) * 0.5D;
+        yOffset = (world.rand.nextFloat() * f1) + (1.0F - f1) * 0.5D;
+        zOffset = (world.rand.nextFloat() * f1) + (1.0F - f1) * 0.5D;
+
+        entityItem = new EntityItem(world, x + xOffset, y + yOffset, z + zOffset, stack);
+        entityItem.delayBeforeCanPickup = 10;
+        world.spawnEntityInWorld(entityItem);
     }
 }

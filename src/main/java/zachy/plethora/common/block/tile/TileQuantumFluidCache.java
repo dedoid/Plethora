@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import zachy.plethora.common.block.ModBlocks;
-import zachy.plethora.common.core.util.FluidUtils;
+import zachy.plethora.common.core.util.FluidUtil;
 import zachy.plethora.common.core.util.Inventory;
 import zachy.plethora.common.core.util.Tank;
 import zachy.plethora.common.network.PacketHandler;
@@ -77,8 +77,8 @@ public class TileQuantumFluidCache extends TileMod implements IInventory, IFluid
         super.updateEntity();
 
         if (!worldObj.isRemote) {
-            FluidUtils.drainContainers(this, inventory, 0, 1);
-            FluidUtils.fillContainers(this, inventory, 0, 1, tank.getFluidType());
+            FluidUtil.drainContainers(this, inventory, 0, 1);
+            FluidUtil.fillContainers(this, inventory, 0, 1, tank.getFluidType());
 
             if (tank.getFluidType() != null && getStackInSlot(2) == null) {
                 inventory.setInventorySlotContents(2, new ItemStack(tank.getFluidType().getBlock()));

@@ -12,10 +12,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import zachy.plethora.client.core.handler.GuiHandler;
 import zachy.plethora.client.lib.LibResources;
 import zachy.plethora.common.Plethora;
 import zachy.plethora.common.block.tile.TileQuantumFluidCache;
+import zachy.plethora.common.core.util.FluidUtil;
+import zachy.plethora.common.core.util.ItemUtil;
 import zachy.plethora.common.lib.LibBlockNames;
 
 public class BlockQuantumFluidCache extends BlockModContainer {
@@ -66,7 +71,7 @@ public class BlockQuantumFluidCache extends BlockModContainer {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int a, float offsetX, float offsetY, float offsetZ) {
         if (!player.isSneaking()) {
 
-            if (!fillBlockWithFluid(world, x, y, z, player, player.getHeldItem())) {
+            if (!fillBlockWithFluid(world, x, y, z, player, player.getHeldItem()) && !emptyBlockFromFluid(world, x, y, z, player, player.getHeldItem())) {
                 player.openGui(Plethora.instance, GuiHandler.quantumFluidCache, world, x, y, z);
             }
 
@@ -128,21 +133,91 @@ public class BlockQuantumFluidCache extends BlockModContainer {
         }
     }
 
-    public boolean fillBlockWithFluid(World world, int x, int y, int z, EntityPlayer player, ItemStack heldItem) {
+    public boolean fillBlockWithFluid(World world, int x, int y, int z, EntityPlayer player, ItemStack held) {
         TileEntity tileEntity;
-        boolean inserted;
+        FluidStack fluid;
+        int filled;
 
         tileEntity = world.getTileEntity(x, y, z);
 
         if (tileEntity instanceof TileQuantumFluidCache) {
 
-            //inserted = FluidUtils.
+            if (held != null) {
+                fluid = FluidUtil.getFluidFromItem(held);
+                if (fluid != null) {
+                    filled = ((TileQuantumFluidCache) tileEntity).fill(ForgeDirection.UP, fluid, false);
+
+                    if (filled >= fluid.amount) {
+                        ((TileQuantumFluidCache) tileEntity).fill(ForgeDirection.UP, fluid, true);
+
+                        if (!player.capabilities.isCreativeMode) {
+                            player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemUtil.consumeItem(held));
+                        }
+
+                        return true;
+                    }
+                }
+            }
 
             if (!world.isRemote) {
                 ((TileQuantumFluidCache) tileEntity).syncWithAll();
             }
+        }
 
-            //return inserted;
+        return false;
+    }
+
+    public boolean emptyBlockFromFluid(World world, int x, int y, int z, EntityPlayer player, ItemStack held) {
+        TileEntity tileEntity;
+        FluidStack available, filled;
+        ItemStack stack;
+        FluidContainerRegistry.FluidContainerData[] datas;
+
+        tileEntity = world.getTileEntity(x, y, z);
+
+        if (tileEntity instanceof TileQuantumFluidCache) {
+
+            available = ((TileQuantumFluidCache) tileEntity).tank.getFluid();
+            if (available != null) {
+                stack = FluidContainerRegistry.fillFluidContainer(available.copy(), held);
+                filled = FluidContainerRegistry.getFluidForFilledItem(stack);
+
+                if (filled == null) {
+                    datas = FluidContainerRegistry.getRegisteredFluidContainerData();
+                    for (FluidContainerRegistry.FluidContainerData data : datas) {
+                        if (data.fluid.getFluid().getName().equals(available.getFluid().getName()) && data.emptyContainer.isItemEqual(held)) {
+                            stack = data.filledContainer.copy();
+                            filled = FluidContainerRegistry.getFluidForFilledItem(stack);
+                        }
+                    }
+                }
+
+                if (filled != null) {
+                    ((TileQuantumFluidCache) tileEntity).drain(ForgeDirection.DOWN, filled, true);
+
+                    if (held.stackSize > 1) {
+                        held.stackSize--;
+
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, held);
+
+                        for (int i = 0; i < player.inventory.mainInventory.length; i++) {
+                            if (player.inventory.mainInventory[i] == null) {
+                                player.inventory.setInventorySlotContents(i, stack);
+                                return true;
+                            }
+                        }
+
+                        if (!world.isRemote) {
+                            ItemUtil.dropItems(world, stack, x, y, z);
+                            ((TileQuantumFluidCache) tileEntity).syncWithAll();
+                        }
+                    } else {
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, stack);
+                    }
+
+                    return true;
+                }
+            }
         }
 
         return false;

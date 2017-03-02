@@ -20,7 +20,9 @@ public class ModBlocks {
             }
         }
 
-        quantumFluidCache = new BlockQuantumFluidCache();
+        if (ConfigHandler.enableQuantumFluidCache) {
+            quantumFluidCache = new BlockQuantumFluidCache();
+        }
 
         initTileEntities();
     }

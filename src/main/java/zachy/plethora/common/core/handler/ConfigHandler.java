@@ -17,6 +17,7 @@ public class ConfigHandler {
     public static String[] compressedVariants = {"minecraft:cobblestone", "minecraft:sand"};
 
     public static boolean enableCompressedBlocks = true;
+    public static boolean enableQuantumFluidCache = true;
 
     public static void loadConfig(File configFile) {
         config = new Configuration(configFile);
@@ -34,8 +35,11 @@ public class ConfigHandler {
         compressedVariants = loadStringList("compressed.variants", desc, compressedVariants);
         CompressionHelper.getVariant(compressedVariants);
 
-        desc = "Set this to false to disable \"compressed\" of the above blocks";
+        desc = "Set this to false to disable the \"compression\" of the above blocks.";
         enableCompressedBlocks = loadBool("compressedBlocks.enabled", desc, enableCompressedBlocks);
+
+        desc = "Set this to false to disable the Quantum Fluid Cache.";
+        enableQuantumFluidCache = loadBool("quantumFluidCache.enabled", desc, enableQuantumFluidCache);
 
         if (config.hasChanged()) {
             config.save();

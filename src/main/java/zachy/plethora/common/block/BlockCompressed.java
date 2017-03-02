@@ -86,6 +86,7 @@ public class BlockCompressed extends BlockMod {
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
     public int getRenderColor(int meta) {
         return 0xe3e3e3 * (meta + 1);
     }
