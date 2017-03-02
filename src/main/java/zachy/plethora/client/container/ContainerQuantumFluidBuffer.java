@@ -7,20 +7,20 @@ import net.minecraft.item.ItemStack;
 import zachy.plethora.client.slot.SlotFake;
 import zachy.plethora.client.slot.SlotFluid;
 import zachy.plethora.client.slot.SlotOutput;
-import zachy.plethora.common.block.tile.TileQuantumFluidCache;
+import zachy.plethora.common.block.tile.TileQuantumFluidBuffer;
 
 public class ContainerQuantumFluidCache extends Container {
 
     EntityPlayer player;
-    TileQuantumFluidCache tileQuantumFluidCache;
+    TileQuantumFluidBuffer tileQuantumFluidBuffer;
 
-    public ContainerQuantumFluidCache(EntityPlayer player, TileQuantumFluidCache tileQuantumFluidCache) {
+    public ContainerQuantumFluidCache(EntityPlayer player, TileQuantumFluidBuffer tileQuantumFluidBuffer) {
         this.player = player;
-        this.tileQuantumFluidCache = tileQuantumFluidCache;
+        this.tileQuantumFluidBuffer = tileQuantumFluidBuffer;
 
-        this.addSlotToContainer(new SlotFluid(tileQuantumFluidCache.inventory, 0, 116, 17));
-        this.addSlotToContainer(new SlotOutput(tileQuantumFluidCache.inventory, 1, 116, 53));
-        this.addSlotToContainer(new SlotFake(tileQuantumFluidCache.inventory, 2, 95, 51, false, false, 1));
+        this.addSlotToContainer(new SlotFluid(tileQuantumFluidBuffer.inventory, 0, 116, 17));
+        this.addSlotToContainer(new SlotOutput(tileQuantumFluidBuffer.inventory, 1, 116, 53));
+        this.addSlotToContainer(new SlotFake(tileQuantumFluidBuffer.inventory, 2, 95, 51, false, false, 1));
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {

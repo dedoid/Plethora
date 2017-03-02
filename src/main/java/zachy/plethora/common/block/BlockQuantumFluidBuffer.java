@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 import zachy.plethora.client.core.handler.GuiHandler;
 import zachy.plethora.client.lib.LibResources;
 import zachy.plethora.common.Plethora;
-import zachy.plethora.common.block.tile.TileQuantumFluidCache;
+import zachy.plethora.common.block.tile.TileQuantumFluidBuffer;
 import zachy.plethora.common.core.util.FluidUtil;
 import zachy.plethora.common.core.util.ItemUtil;
 import zachy.plethora.common.lib.LibBlockNames;
@@ -31,7 +31,7 @@ public class BlockQuantumFluidCache extends BlockModContainer {
         super(Material.iron);
 
         setHardness(2);
-        setBlockName(LibBlockNames.QUANTUM_FLUID_CACHE);
+        setBlockName(LibBlockNames.QUANTUM_FLUID_BUFFER);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class BlockQuantumFluidCache extends BlockModContainer {
 
     @Override
     public void registerBlockIcons(IIconRegister register) {
-        iconFront = register.registerIcon(LibResources.PREFIX_MOD + "quantumFluidCache_front");
-        blockIcon = register.registerIcon(LibResources.PREFIX_MOD + "quantumFluidCache_icon");
+        iconFront = register.registerIcon(LibResources.PREFIX_MOD + LibBlockNames.QUANTUM_FLUID_BUFFER + "_front");
+        blockIcon = register.registerIcon(LibResources.PREFIX_MOD + LibBlockNames.QUANTUM_FLUID_BUFFER + "_icon");
     }
 
     @Override
@@ -64,7 +64,7 @@ public class BlockQuantumFluidCache extends BlockModContainer {
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileQuantumFluidCache();
+        return new TileQuantumFluidBuffer();
     }
 
     @Override
@@ -88,10 +88,10 @@ public class BlockQuantumFluidCache extends BlockModContainer {
 
         tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity instanceof TileQuantumFluidCache) {
+        if (tileEntity instanceof TileQuantumFluidBuffer) {
 
             if (stack.getTagCompound() != null) {
-                ((TileQuantumFluidCache) tileEntity).readFromNBTWithoutCoords(stack.getTagCompound().getCompoundTag("tileEntity"));
+                ((TileQuantumFluidBuffer) tileEntity).readFromNBTWithoutCoords(stack.getTagCompound().getCompoundTag("tileEntity"));
             }
         }
 
@@ -109,14 +109,14 @@ public class BlockQuantumFluidCache extends BlockModContainer {
 
         tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity instanceof TileQuantumFluidCache) {
+        if (tileEntity instanceof TileQuantumFluidBuffer) {
 
             xOffset = world.rand.nextFloat() * 0.8F + 0.1F;
             yOffset = world.rand.nextFloat() * 0.8F + 0.1F;
             zOffset = world.rand.nextFloat() * 0.8F + 0.1F;
 
-            if (((TileQuantumFluidCache) tileEntity).tank.getFluid() != null) {
-                stackNBT = ((TileQuantumFluidCache) tileEntity).getDropWithNBT();
+            if (((TileQuantumFluidBuffer) tileEntity).tank.getFluid() != null) {
+                stackNBT = ((TileQuantumFluidBuffer) tileEntity).getDropWithNBT();
 
                 amountToDrop = Math.min(world.rand.nextInt(21) + 10, stackNBT.stackSize);
 
@@ -140,15 +140,15 @@ public class BlockQuantumFluidCache extends BlockModContainer {
 
         tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity instanceof TileQuantumFluidCache) {
+        if (tileEntity instanceof TileQuantumFluidBuffer) {
 
             if (held != null) {
                 fluid = FluidUtil.getFluidFromItem(held);
                 if (fluid != null) {
-                    filled = ((TileQuantumFluidCache) tileEntity).fill(ForgeDirection.UP, fluid, false);
+                    filled = ((TileQuantumFluidBuffer) tileEntity).fill(ForgeDirection.UP, fluid, false);
 
                     if (filled >= fluid.amount) {
-                        ((TileQuantumFluidCache) tileEntity).fill(ForgeDirection.UP, fluid, true);
+                        ((TileQuantumFluidBuffer) tileEntity).fill(ForgeDirection.UP, fluid, true);
 
                         if (!player.capabilities.isCreativeMode) {
                             player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemUtil.consumeItem(held));
@@ -160,7 +160,7 @@ public class BlockQuantumFluidCache extends BlockModContainer {
             }
 
             if (!world.isRemote) {
-                ((TileQuantumFluidCache) tileEntity).syncWithAll();
+                ((TileQuantumFluidBuffer) tileEntity).syncWithAll();
             }
         }
 
@@ -175,9 +175,9 @@ public class BlockQuantumFluidCache extends BlockModContainer {
 
         tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity instanceof TileQuantumFluidCache) {
+        if (tileEntity instanceof TileQuantumFluidBuffer) {
 
-            available = ((TileQuantumFluidCache) tileEntity).tank.getFluid();
+            available = ((TileQuantumFluidBuffer) tileEntity).tank.getFluid();
             if (available != null) {
                 stack = FluidContainerRegistry.fillFluidContainer(available.copy(), held);
                 filled = FluidContainerRegistry.getFluidForFilledItem(stack);
@@ -193,7 +193,7 @@ public class BlockQuantumFluidCache extends BlockModContainer {
                 }
 
                 if (filled != null) {
-                    ((TileQuantumFluidCache) tileEntity).drain(ForgeDirection.DOWN, filled, true);
+                    ((TileQuantumFluidBuffer) tileEntity).drain(ForgeDirection.DOWN, filled, true);
 
                     if (held.stackSize > 1) {
                         held.stackSize--;
@@ -209,7 +209,7 @@ public class BlockQuantumFluidCache extends BlockModContainer {
 
                         if (!world.isRemote) {
                             ItemUtil.dropItems(world, stack, x, y, z);
-                            ((TileQuantumFluidCache) tileEntity).syncWithAll();
+                            ((TileQuantumFluidBuffer) tileEntity).syncWithAll();
                         }
                     } else {
                         player.inventory.setInventorySlotContents(player.inventory.currentItem, stack);
