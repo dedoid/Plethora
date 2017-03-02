@@ -4,13 +4,12 @@ import cpw.mods.fml.common.Optional;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.IWailaRegistrar;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import zachy.plethora.common.block.tile.TileQuantumFluidCache;
+import zachy.plethora.common.block.tile.TileQuantumFluidBuffer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +38,11 @@ public class WailaDataProvider implements IWailaDataProvider {
     @Override
     @Optional.Method(modid = "Waila")
     public List<String> getWailaBody(ItemStack stack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        TileQuantumFluidCache tileQuantumFluidCache;
+        TileQuantumFluidBuffer tileQuantumFluidBuffer;
 
-        tileQuantumFluidCache = (TileQuantumFluidCache) accessor.getTileEntity();
+        tileQuantumFluidBuffer = (TileQuantumFluidBuffer) accessor.getTileEntity();
 
-        tileQuantumFluidCache.addWailaInfo(quantumFluidCacheInfo);
+        tileQuantumFluidBuffer.addWailaInfo(quantumFluidCacheInfo);
 
         currentTip.addAll(quantumFluidCacheInfo);
         quantumFluidCacheInfo.clear();

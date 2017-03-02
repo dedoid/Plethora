@@ -2,7 +2,7 @@ package zachy.plethora.common.integration.waila;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import mcp.mobius.waila.api.IWailaRegistrar;
-import zachy.plethora.common.block.tile.TileQuantumFluidCache;
+import zachy.plethora.common.block.tile.TileQuantumFluidBuffer;
 
 public class IntegrationModuleWaila {
 
@@ -11,6 +11,6 @@ public class IntegrationModuleWaila {
     }
 
     public static void callbackRegister(IWailaRegistrar registrar) {
-        registrar.registerBodyProvider(new WailaDataProvider(), TileQuantumFluidCache.class);
+        registrar.registerBodyProvider(new WailaDataProvider(), TileQuantumFluidBuffer.class);
     }
 }

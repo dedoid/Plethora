@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import zachy.plethora.client.core.handler.GuiHandler;
+import zachy.plethora.client.lib.LibGuiIDs;
 import zachy.plethora.client.lib.LibResources;
 import zachy.plethora.common.Plethora;
 import zachy.plethora.common.block.tile.TileQuantumFluidBuffer;
@@ -23,11 +23,11 @@ import zachy.plethora.common.core.util.FluidUtil;
 import zachy.plethora.common.core.util.ItemUtil;
 import zachy.plethora.common.lib.LibBlockNames;
 
-public class BlockQuantumFluidCache extends BlockModContainer {
+public class BlockQuantumFluidBuffer extends BlockModContainer {
 
     IIcon iconFront;
 
-    public BlockQuantumFluidCache() {
+    public BlockQuantumFluidBuffer() {
         super(Material.iron);
 
         setHardness(2);
@@ -72,7 +72,7 @@ public class BlockQuantumFluidCache extends BlockModContainer {
         if (!player.isSneaking()) {
 
             if (!fillBlockWithFluid(world, x, y, z, player, player.getHeldItem()) && !emptyBlockFromFluid(world, x, y, z, player, player.getHeldItem())) {
-                player.openGui(Plethora.instance, GuiHandler.quantumFluidCache, world, x, y, z);
+                player.openGui(Plethora.instance, LibGuiIDs.QUANTUM_FLUID_BUFFER, world, x, y, z);
             }
 
             return true;
@@ -124,7 +124,7 @@ public class BlockQuantumFluidCache extends BlockModContainer {
 
                 world.spawnEntityInWorld(entityItem);
             } else {
-                stack = new ItemStack(ModBlocks.quantumFluidCache);
+                stack = new ItemStack(ModBlocks.quantumFluidBuffer);
 
                 entityItem = new EntityItem(world, x + xOffset, y + yOffset, z + zOffset, stack);
 

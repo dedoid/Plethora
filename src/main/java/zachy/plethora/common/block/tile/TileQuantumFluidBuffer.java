@@ -16,23 +16,24 @@ import zachy.plethora.common.block.ModBlocks;
 import zachy.plethora.common.core.util.FluidUtil;
 import zachy.plethora.common.core.util.Inventory;
 import zachy.plethora.common.core.util.Tank;
+import zachy.plethora.common.lib.LibBlockNames;
 import zachy.plethora.common.network.PacketHandler;
 
 import java.util.List;
 
-public class TileQuantumFluidCache extends TileMod implements IInventory, IFluidHandler {
+public class TileQuantumFluidBuffer extends TileMod implements IInventory, IFluidHandler {
 
     public int storage;
 
     public Inventory inventory;
     public Tank tank;
 
-    public  TileQuantumFluidCache() {
+    public TileQuantumFluidBuffer() {
         storage = Integer.MAX_VALUE;
 
-        inventory = new Inventory(3, "tileQuantumFluidCache", 64, this);
+        inventory = new Inventory(3, LibBlockNames.TILE_QUANTUM_FLUID_BUFFER, 64, this);
 
-        tank = new Tank("tileQuantumFluidCache", storage, this);
+        tank = new Tank(LibBlockNames.TILE_QUANTUM_FLUID_BUFFER, storage, this);
     }
 
     @Override
@@ -214,7 +215,7 @@ public class TileQuantumFluidCache extends TileMod implements IInventory, IFluid
         ItemStack dropStack;
 
         tileEntity = new NBTTagCompound();
-        dropStack = new ItemStack(ModBlocks.quantumFluidCache, 1);
+        dropStack = new ItemStack(ModBlocks.quantumFluidBuffer, 1);
 
         writeToNBTWithoutCoords(tileEntity);
 

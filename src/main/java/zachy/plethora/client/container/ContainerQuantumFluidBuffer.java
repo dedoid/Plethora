@@ -9,12 +9,12 @@ import zachy.plethora.client.slot.SlotFluid;
 import zachy.plethora.client.slot.SlotOutput;
 import zachy.plethora.common.block.tile.TileQuantumFluidBuffer;
 
-public class ContainerQuantumFluidCache extends Container {
+public class ContainerQuantumFluidBuffer extends Container {
 
     EntityPlayer player;
     TileQuantumFluidBuffer tileQuantumFluidBuffer;
 
-    public ContainerQuantumFluidCache(EntityPlayer player, TileQuantumFluidBuffer tileQuantumFluidBuffer) {
+    public ContainerQuantumFluidBuffer(EntityPlayer player, TileQuantumFluidBuffer tileQuantumFluidBuffer) {
         this.player = player;
         this.tileQuantumFluidBuffer = tileQuantumFluidBuffer;
 
