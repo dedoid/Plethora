@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
@@ -21,6 +22,7 @@ import zachy.plethora.common.Plethora;
 import zachy.plethora.common.block.tile.TileQuantumFluidBuffer;
 import zachy.plethora.common.core.util.FluidUtil;
 import zachy.plethora.common.core.util.ItemUtil;
+import zachy.plethora.common.item.block.ItemBlockQuantumFluidBuffer;
 import zachy.plethora.common.lib.LibBlockNames;
 
 public class BlockQuantumFluidBuffer extends BlockModContainer {
@@ -36,7 +38,7 @@ public class BlockQuantumFluidBuffer extends BlockModContainer {
 
     @Override
     public Block setBlockName(String name) {
-        GameRegistry.registerBlock(this, name);
+        GameRegistry.registerBlock(this, ItemBlockQuantumFluidBuffer.class, name);
 
         return super.setBlockName(name);
     }
@@ -91,7 +93,8 @@ public class BlockQuantumFluidBuffer extends BlockModContainer {
         if (tileEntity instanceof TileQuantumFluidBuffer) {
 
             if (stack.getTagCompound() != null) {
-                ((TileQuantumFluidBuffer) tileEntity).readFromNBTWithoutCoords(stack.getTagCompound().getCompoundTag("tileEntity"));
+                //((TileQuantumFluidBuffer) tileEntity).readFromNBTWithoutCoords(stack.getTagCompound().getCompoundTag("tileEntity"));
+                tileEntity.readFromNBT(stack.getTagCompound().getCompoundTag("tileEntity"));
             }
         }
 

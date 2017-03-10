@@ -1,10 +1,10 @@
 package zachy.plethora.common.core;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import zachy.plethora.client.lib.LibResources;
+import zachy.plethora.common.block.ModBlocks;
 import zachy.plethora.common.lib.LibMisc;
 
 public class PlethoraCreativeTab extends CreativeTabs {
@@ -19,7 +19,7 @@ public class PlethoraCreativeTab extends CreativeTabs {
 
     @Override
     public ItemStack getIconItemStack() {
-        return new ItemStack(Items.cauldron);
+        return new ItemStack(ModBlocks.quantumFluidBuffer);
     }
 
     @Override

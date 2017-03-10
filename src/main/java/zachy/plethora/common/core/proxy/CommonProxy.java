@@ -5,6 +5,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import zachy.plethora.common.block.ModBlocks;
 import zachy.plethora.common.core.handler.ConfigHandler;
+import zachy.plethora.common.crafting.ModCraftingRecipes;
 import zachy.plethora.common.integration.IntegrationManager;
 
 public class CommonProxy {
@@ -13,6 +14,7 @@ public class CommonProxy {
         ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
 
         ModBlocks.init();
+        ModCraftingRecipes.init();
     }
 
     public void init(FMLInitializationEvent event) {

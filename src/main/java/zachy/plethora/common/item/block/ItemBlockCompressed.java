@@ -19,9 +19,15 @@ public class ItemBlockCompressed extends ItemBlockWithMetadataAndName {
     }
 
     @SideOnly(Side.CLIENT)
+    @SuppressWarnings("unchecked")
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List toolTip, boolean b) {
-        toolTip.add((int) Math.pow(9, (stack.getItemDamage() + 1)) + " " + stack.getDisplayName());
+    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean show) {
+        String name;
+
+        name = stack.getDisplayName();
+        name = name.substring(15, name.length() - 7).replaceAll("-", " ");
+
+        tooltip.add((int) Math.pow(9, (stack.getItemDamage() + 1)) + " " + name);
     }
 
     @SideOnly(Side.CLIENT)

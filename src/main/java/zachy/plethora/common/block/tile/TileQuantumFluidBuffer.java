@@ -39,7 +39,10 @@ public class TileQuantumFluidBuffer extends TileMod implements IInventory, IFlui
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        readFromNBTWithoutCoords(tag);
+        //readFromNBTWithoutCoords(tag);
+
+        tank.readFromNBT(tag);
+        inventory.readFromNBT(tag);
     }
 
     public void readFromNBTWithoutCoords(NBTTagCompound tag) {
@@ -50,7 +53,10 @@ public class TileQuantumFluidBuffer extends TileMod implements IInventory, IFlui
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
-        writeToNBTWithoutCoords(tag);
+        //writeToNBTWithoutCoords(tag);
+
+        tank.writeToNBT(tag);
+        inventory.writeToNBT(tag);
     }
 
     public void writeToNBTWithoutCoords(NBTTagCompound tag) {
@@ -211,16 +217,24 @@ public class TileQuantumFluidBuffer extends TileMod implements IInventory, IFlui
     }
 
     public ItemStack getDropWithNBT() {
-        NBTTagCompound tileEntity;
+        NBTTagCompound tileEntity, tooltip;
         ItemStack dropStack;
 
         tileEntity = new NBTTagCompound();
+
         dropStack = new ItemStack(ModBlocks.quantumFluidBuffer, 1);
 
-        writeToNBTWithoutCoords(tileEntity);
+        //writeToNBTWithoutCoords(tileEntity);
+        writeToNBT(tileEntity);
 
         dropStack.setTagCompound(new NBTTagCompound());
         dropStack.getTagCompound().setTag("tileEntity", tileEntity);
+
+        tooltip = new NBTTagCompound();
+        tooltip.setString("fluid", tank.getFluid().getLocalizedName());
+        tooltip.setString("fluidAmount", tank.getFluidAmount() + "mb");
+
+        dropStack.setTagCompound(tooltip);
 
         return dropStack;
     }

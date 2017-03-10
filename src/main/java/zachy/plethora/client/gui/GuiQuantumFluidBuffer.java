@@ -37,7 +37,7 @@ public class GuiQuantumFluidBuffer extends GuiContainer {
     protected void drawGuiContainerForegroundLayer(int x, int y) {
         String name;
 
-        name = "tile." + LibBlockNames.QUANTUM_FLUID_BUFFER +".name";
+        name = "tile." + LibBlockNames.QUANTUM_FLUID_BUFFER + ".name";
 
         this.fontRendererObj.drawString(StatCollector.translateToLocal(name), this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2, 6, 4210752);
         this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 2, 4210752);

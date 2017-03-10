@@ -32,7 +32,7 @@ public class BlockCompressed extends BlockMod {
         this.blockName = blockName;
         this.textureName = textureName;
 
-        //setResistance();
+        setResistance(25F); // temp value for now
         setStepSound(soundTypeStone);
         setBlockName(LibBlockNames.COMPRESSED + blockName);
     }
@@ -52,7 +52,7 @@ public class BlockCompressed extends BlockMod {
     }
 
     @Override
-    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
         for (int i = 0; i < 8; i++) {
             list.add(new ItemStack(item, 1, i));
         }

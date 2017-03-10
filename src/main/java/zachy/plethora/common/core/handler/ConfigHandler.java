@@ -14,7 +14,7 @@ public class ConfigHandler {
 
     public static Configuration config;
 
-    public static String[] compressedVariants = {"minecraft:cobblestone", "minecraft:sand"};
+    public static String[] compressedVariants = {"minecraft:cobblestone", "minecraft:sand", "minecraft:gravel"};
 
     public static boolean enableCompressedBlocks = true;
     public static boolean enableQuantumFluidBuffer = true;
